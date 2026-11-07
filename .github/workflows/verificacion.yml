@@ -1,0 +1,29 @@
+name: Verificacion del dominio
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      - name: El dominio no depende de Spring ni JPA
+        run: |
+          if grep -rn "org.springframework\|jakarta.persistence\|javax.persistence" src; then
+            echo "El dominio importa dependencias de framework."
+            exit 1
+          fi
+
+      - name: Pruebas
+        run: mvn -B test

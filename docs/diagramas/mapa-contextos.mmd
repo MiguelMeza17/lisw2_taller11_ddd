@@ -1,0 +1,5 @@
+flowchart LR
+    A[Autoría] -- valida --> V[Validación]
+    A -- solicita transición --> C[Ciclo de Vida]
+    C -- habilita asignación --> R[Revisión por Pares]
+    R -- dictamen --> C
