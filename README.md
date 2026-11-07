@@ -22,3 +22,11 @@ co.edu.unicauca.saberpro.domain/
 ```bash
 mvn test
 ```
+
+## Verificación
+
+El workflow `.github/workflows/verificacion.yml` corre en cada push y PR a `main` y `dev`:
+
+1. Comprueba que el dominio no importe nada de Spring ni JPA:
+   `grep -r "org.springframework\|jakarta.persistence" src` debe salir vacío.
+2. Ejecuta `mvn test`.
