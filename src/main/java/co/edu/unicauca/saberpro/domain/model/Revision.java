@@ -78,6 +78,22 @@ public class Revision {
         return dictamen != Dictamen.PENDIENTE;
     }
 
+    /**
+     * Aplica el dictamen sobre la pregunta revisada (que debe estar en revisión).
+     *
+     * @param pregunta pregunta a la que corresponde esta revisión
+     */
+    public void aplicarDictamenA(Pregunta pregunta) {
+        if (!Objects.equals(pregunta.getId(), idPregunta)) {
+            throw new ReglaNegocioException("La revisión no corresponde a esta pregunta.");
+        }
+        switch (dictamen) {
+            case APROBADA -> pregunta.aprobar();
+            case RECHAZADA -> pregunta.rechazar();
+            case PENDIENTE -> throw new ReglaNegocioException("La revisión todavía no tiene dictamen.");
+        }
+    }
+
     public Long getId() {
         return id;
     }
